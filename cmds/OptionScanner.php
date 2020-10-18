@@ -39,7 +39,7 @@ class Main extends BaseCmd {
 
     public function initStrategies() {
         foreach ($this->configs['strategies'] as $strategyId => $strategyConfig) {
-            $path = __DIR__.'/../lib/components/strategy/'.$strategyConfig['class'].'.php';
+            $path = __DIR__.'/../lib/strategies/'.$strategyConfig['class'].'/'.$strategyConfig['class'].'.php';
             if (isset($strategyConfig['path'])) {
                 $path = __DIR__.'/../'.$strategyConfig['path'].'.php';
             }

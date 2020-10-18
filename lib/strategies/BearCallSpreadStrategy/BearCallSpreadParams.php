@@ -1,8 +1,8 @@
 <?php
 
-require_once('StrategyParams.php');
+require_once(__DIR__.'/../../components/strategy/StrategyParams.php');
 
-class BullPutSpreadParams extends StrategyParams {
+class BearCallSpreadParams extends StrategyParams {
 
     public function getSymbols() {
         return $this->get('symbols');

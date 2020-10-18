@@ -1,14 +1,14 @@
 <?php
 
 require_once(__DIR__.'/../../engine/common/Constants.php');
-require_once('OptionStrategy.php');
-require_once('BullPutSpreadOrder.php');
-require_once('BullPutSpreadParams.php');
+require_once(__DIR__.'/../../components/strategy/OptionStrategy.php');
+require_once('BearCallSpreadOrder.php');
+require_once('BearCallSpreadParams.php');
 
-class BullPutSpreadStrategy extends OptionStrategy {
+class BearCallSpreadStrategy extends OptionStrategy {
 
     public function getName() {
-        return "BullPutSpreadStrategy";
+        return "BearCallSpreadStrategy";
     }
 
     public function init($engine, $id, $configs) {
@@ -16,7 +16,7 @@ class BullPutSpreadStrategy extends OptionStrategy {
     }
 
     public function createParams($configs) {
-        return new BullPutSpreadParams($configs);
+        return new BearCallSpreadParams($configs);
     }
 
     public function findOrders() {
@@ -26,29 +26,28 @@ class BullPutSpreadStrategy extends OptionStrategy {
         $ret = array();
         foreach ($this->getParams()->getSymbols() as $symbol) {
             $chain = $quoter->getOptionChain($symbol, $startDate, $endDate,
-                   Constants::PUT, 1000 /* strikes */);
+                   Constants::CALL, 1000 /* strikes */);
             $optionStrategyComponent = $this->engine->getComponent('strategy');
             foreach ($chain as $expDate => $strikes) {
                 foreach ($strikes as $shortStrike => $shortQuotes) {
-                    if (isset($shortQuotes['PUT']) && 
-                        $shortQuotes['PUT']->getDelta() > (-1 * $this->getParams()->getMaxDelta()) &&
-                        $shortQuotes['PUT']->getDelta() < (-1 * $this->getParams()->getMinDelta()) &&
-                        $shortQuotes['PUT']->getAsk() > 0) {
+                    if (isset($shortQuotes['CALL']) && 
+                          $shortQuotes['CALL']->getDelta() >= $this->getParams()->getMinDelta() &&
+                          $shortQuotes['CALL']->getDelta() <= $this->getParams()->getMaxDelta() &&
+                          $shortQuotes['CALL']->getAsk() > 0) {
 
-                        $shortLeg = $optionStrategyComponent->createSellLeg(1, $shortQuotes['PUT']);
+                        $shortLeg = $optionStrategyComponent->createSellLeg(1, $shortQuotes['CALL']);
 
                         foreach ($strikes as $longStrike => $longQuotes) {
-                            $longLeg = $optionStrategyComponent->createBuyLeg(1, $longQuotes['PUT']);
-
-                            $order = new BullPutSpreadOrder($shortLeg->getSymbol());
+                            $longLeg = $optionStrategyComponent->createBuyLeg(1, $longQuotes['CALL']);
+                            $order = new BearCallSpreadOrder($shortLeg->getSymbol());
                             $order->addLeg($shortLeg);
                             $order->addLeg($longLeg);
 
-                            if ($shortStrike < $longStrike) {
+                            if ($shortStrike > $longStrike) {
                                 continue;
                             }
-                            $credit = $order->getPrice();
-                            if ($credit >= 0) {
+                            $price = $order->getPrice();
+                            if ($price >= 0) {
                                 continue;
                             }
                             $risk = $order->getRisk();
