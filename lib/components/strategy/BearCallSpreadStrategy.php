@@ -1,5 +1,6 @@
 <?php
 
+require_once(__DIR__.'/../../engine/common/Constants.php');
 require_once('OptionStrategy.php');
 require_once('BearCallSpreadOrder.php');
 
@@ -16,7 +17,7 @@ class BearCallSpreadStrategy extends OptionStrategy {
         $ret = array();
         foreach ($this->configs['symbols'] as $symbol) {
             $chain = $quoter->getOptionChain($symbol, $startDate, $endDate,
-                   'CALL', 1000 /* strikes */);
+                   Constants::CALL, 1000 /* strikes */);
             $optionStrategyComponent = $this->engine->getComponent('strategy');
             foreach ($chain as $expDate => $strikes) {
                 foreach ($strikes as $shortStrike => $shortQuotes) {

@@ -1,5 +1,6 @@
 <?php
 
+require_once(__DIR__.'/../../engine/common/Constants.php');
 require_once(__DIR__.'/../../engine/common/StockQuote.php');
 require_once(__DIR__.'/../../engine/common/OptionQuote.php');
 require_once(__DIR__.'/../../engine/common/EngineComponent.php');
@@ -87,7 +88,7 @@ class TDAmeriTradeQuoteComponent extends EngineComponent {
                 $attrs = array();
                 $attrs['expDate'] = $expDate;
                 $attrs['symbol'] = $price[0]['symbol'];
-                $attrs['type'] = 'CALL';
+                $attrs['type'] = Constants::CALL;
                 $attrs['strike'] = $strike;
                 $attrs['description'] = $price[0]['description'];
                 $attrs['bid'] = $price[0]['bid'];
@@ -108,7 +109,7 @@ class TDAmeriTradeQuoteComponent extends EngineComponent {
                 $attrs = array();
                 $attrs['expDate'] = $expDate;
                 $attrs['symbol'] = $price[0]['symbol'];
-                $attrs['type'] = 'PUT';
+                $attrs['type'] = Constants::PUT;
                 $attrs['strike'] = $strike;
                 $attrs['description'] = $price[0]['description'];
                 $attrs['bid'] = $price[0]['bid'];

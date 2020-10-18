@@ -1,5 +1,7 @@
 <?php
 
+require_once('Constants.php');
+
 class OptionLeg {
 
     public function __construct($attrs) {
@@ -15,11 +17,11 @@ class OptionLeg {
     }
 
     public function isLong() {
-        return $this->getType()=='BUY';
+        return $this->getType()==Constants::BUY;
     }
 
     public function isShort() {
-        return $this->getType()=='SELL';
+        return $this->getType()==Constants::SELL;
     }
 
     public function getType() {

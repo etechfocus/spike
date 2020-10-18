@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__.'/../../engine/common/Constants.php');
+
 class OptionStrategy {
 
     const LEG_TYPE_BUY = 'BUY';
@@ -16,6 +18,10 @@ class OptionStrategy {
 
     public function getId() {
         return $this->id;
+    }
+
+    public function getName() {
+        return "OptionStrategy";
     }
 
     public function getEngine() {
@@ -65,7 +71,7 @@ class OptionStrategy {
     }
 
     public function firstLongCallLeg() {
-        $legs = $this->getLegsByTypes('BUY', 'CALL');
+        $legs = $this->getLegsByTypes(Constants::BUY, Constants::CALL);
         if (count($legs) <= 0) {
             return false;
         }
@@ -73,7 +79,7 @@ class OptionStrategy {
     }
 
     public function firstShortCallLeg() {
-        $legs = $this->getLegsByTypes('SELL', 'CALL');
+        $legs = $this->getLegsByTypes(Constants::SELL, Constants::CALL);
         if (count($legs) <= 0) {
             return false;
         }
@@ -81,7 +87,7 @@ class OptionStrategy {
     }
 
     public function firstLongPutLeg() {
-        $legs = $this->getLegsByTypes('BUY', 'PUT');
+        $legs = $this->getLegsByTypes(Constants::BUY, Constants::PUT);
         if (count($legs) <= 0) {
             return false;
         }
@@ -89,7 +95,7 @@ class OptionStrategy {
     }
 
     public function firstShortPutLeg() {
-        $legs = $this->getLegsByTypes('SELL', 'PUT');
+        $legs = $this->getLegsByTypes(Constants::SELL, Constants::PUT);
         if (count($legs) <= 0) {
             return false;
         }
@@ -99,7 +105,7 @@ class OptionStrategy {
     public function getPrice() {
         $ret = 0;
         foreach ($this->legs as $leg) {
-            if ($leg->getType() == 'SELL') {
+            if ($leg->isShort()) {
                 $ret -= ($leg->getQty() * $leg->getBid());
             } else {
                 $ret += ($leg->getQty() * $leg->getAsk());
