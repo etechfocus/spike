@@ -9,6 +9,10 @@
       "scanner": {
         "path":"lib/components/scanner/OptionStrategyComponent",
         "class":"OptionStrategyComponent"
+      },
+      "trader": {
+        "path":"lib/components/trader/TraderComponent",
+        "class":"TraderComponent"
       }
   }
 }
