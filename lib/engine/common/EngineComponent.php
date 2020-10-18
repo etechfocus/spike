@@ -1,6 +1,6 @@
 <?php
 
-class TradeComponent {
+class EngineComponent {
 
     protected $engine;
     protected $configs;

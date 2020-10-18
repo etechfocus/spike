@@ -2,7 +2,7 @@
   "debug": false,
   "components": {
       "quoter": {
-        "path":"lib/components/quote/TDAmeriTradeQuoteComponent",
+        "path":"lib/components/quoter/TDAmeriTradeQuoteComponent",
         "class":"TDAmeriTradeQuoteComponent",
         "api_key":"..."
       },

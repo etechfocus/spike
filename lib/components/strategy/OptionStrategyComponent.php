@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__.'/../../engine/common/TradeComponent.php');
+require_once(__DIR__.'/../../engine/common/EngineComponent.php');
 
-class OptionStrategyComponent extends TradeComponent {
+class OptionStrategyComponent extends EngineComponent {
 
     public function createSellLeg($qty, $quote) {
         $attrs = array();

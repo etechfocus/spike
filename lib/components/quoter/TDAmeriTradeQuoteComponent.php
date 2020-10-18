@@ -2,9 +2,9 @@
 
 require_once(__DIR__.'/../../engine/common/StockQuote.php');
 require_once(__DIR__.'/../../engine/common/OptionQuote.php');
-require_once(__DIR__.'/../../engine/common/TradeComponent.php');
+require_once(__DIR__.'/../../engine/common/EngineComponent.php');
 
-class TDAmeriTradeQuoteComponent extends TradeComponent {
+class TDAmeriTradeQuoteComponent extends EngineComponent {
 
     const OPTION_TYPE_CALL = 'CALL';
     const OPTION_TYPE_PUT = 'PUT';
