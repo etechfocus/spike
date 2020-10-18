@@ -102,7 +102,7 @@ class OptionOrder {
 
     public function getPrice() {
         $ret = 0;
-        foreach ($this->legs as $leg) {
+        foreach ($this->getLegs() as $leg) {
             if ($leg->isShort()) {
                 $ret -= ($leg->getQty() * $leg->getBid());
             } else {
@@ -112,4 +112,22 @@ class OptionOrder {
         return round($ret, 3);
     }
 
+    public function getDelta() {
+        $ret = 0;
+        foreach ($this->getLegs() as $leg) {
+            $ret += ($leg->getQty() * $leg->getDelta());
+        }
+        return $ret;
+    }
+
+    public function getRisk() {
+        return 0;
+    }
+
+    public function getROI() {
+        if ($this->getRisk() <= 0) {
+            return 0;
+        }
+        return round(-1*$this->getPrice()/$this->getRisk(),3);
+    }
 }

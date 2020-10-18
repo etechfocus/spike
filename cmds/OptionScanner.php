@@ -16,7 +16,7 @@ class Main extends BaseCmd {
     }
 
     public function process() {
-        foreach ($this->strategies as $strategyId => $strategy) {
+        foreach ($this->strategies as $strategy) {
             $orders = $strategy->findOrders();
             printf("%-12s %-52s %-6s %-6s %-6s %-6s\n", "STRATEGY", "ORDER", "PRICE", "DELTA", "RISK", "ROI");
             printf("%-12s %-52s %-6s %-6s %-6s %-6s\n", "--------", "-----", "-----", "-----", "----", "---");
@@ -39,17 +39,25 @@ class Main extends BaseCmd {
 
     public function initStrategies() {
         foreach ($this->configs['strategies'] as $strategyId => $strategyConfig) {
+            $configs = array();
+            if (isset($this->configs['strategies'][$strategyId])) {
+                $configs = $this->configs['strategies'][$strategyId];
+            }
+
+            if (isset($configs['enabled']) && !$configs['enabled']) {
+                // strategy disabled
+                continue;
+            }
+
+            // instantiate strategy
             $path = __DIR__.'/../lib/strategies/'.$strategyConfig['class'].'/'.$strategyConfig['class'].'.php';
             if (isset($strategyConfig['path'])) {
                 $path = __DIR__.'/../'.$strategyConfig['path'].'.php';
             }
             require_once($path);
-            $this->strategies[$strategyId] = new $strategyConfig['class']();
-            $configs = array();
-            if (isset($this->configs['strategies'][$strategyId])) {
-                $configs = $this->configs['strategies'][$strategyId];
-            }
-            $this->strategies[$strategyId]->init($this->engine, $strategyId, $configs);
+            $strategy = new $strategyConfig['class']();
+            $strategy->init($this->engine, $strategyId, $configs);
+            $this->strategies[] = $strategy;
         }
     }
 

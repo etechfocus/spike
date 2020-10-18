@@ -39,6 +39,33 @@
           "maxDelta": 0.13,
           "minROI": 0.05,
           "maxROI": 0.20
+      },
+      "ic1": {
+          "enabled": false,
+          "class": "ComboStrategy",
+          "description": "Iron Condor",
+          "strategies": {
+              "ic1-BearCallSp": {
+                  "class": "BearCallSpreadStrategy",
+                  "description": "Bear Call Spread",
+                  "symbols": ["MSFT"],
+                  "days": 90,
+                  "minDelta": 0.10,
+                  "maxDelta": 0.13,
+                  "minROI": 0.05,
+                  "maxROI": 0.20
+              },
+              "ic1-BullPutSp": {
+                  "class": "BullPutSpreadStrategy",
+                  "description": "Bull Put Spread",
+                  "symbols": ["MSFT"],
+                  "days": 90,
+                  "minDelta": 0.136,
+                  "maxDelta": 0.15,
+                  "minROI": 0.10,
+                  "maxROI": 0.20
+              }
+          }
       }
   }
 }
