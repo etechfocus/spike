@@ -27,6 +27,16 @@ class Main extends BaseCmd {
         }
     }
 
+    public function usage() {
+        print("Usage: php OptionScanner.php ".
+                    "[-h] ".
+                    "[--engine_config <engine config default:".self::DEFAULT_ENGINE_CONFIG.">] ".
+                    "[--scanner_config <scanner config default:".self::DEFAULT_SCANNER_CONFIG.">] "
+        );
+        print("\n");
+        exit();
+    }
+
     public function initStrategies() {
         foreach ($this->configs['strategies'] as $strategyId => $strategyConfig) {
             require_once(__DIR__.'/../'.$strategyConfig['path'].'.php');
@@ -39,17 +49,7 @@ class Main extends BaseCmd {
         }
     }
 
-    public function init() {
-        $options = getopt("h", array("help", "engine_config::", "scanner_config::"));
-        if (isset($options['h']) || isset($options['help'])) {
-            print("Usage: php OptionScanner.php ".
-                    "[-h] ".
-                    "[--engine_config <engine config default:".self::DEFAULT_ENGINE_CONFIG.">] ".
-                    "[--scanner_config <scanner config default:".self::DEFAULT_SCANNER_CONFIG.">] "
-            );
-            print("\n");
-            exit();
-        }
+    public function initEngine() {
         $this->engine_config = __DIR__."/../configs/".self::DEFAULT_ENGINE_CONFIG;
         if (isset($options['engine_config'])) {
             $this->engine_config = __DIR__."/../configs/".$options['engine_config'];
@@ -57,7 +57,9 @@ class Main extends BaseCmd {
         $configs = $this->loadConfig($this->engine_config);
         $this->engine = new TradeEngine();
         $this->engine->init($configs);
+    }
 
+    public function initScanner() {
         $this->scanner_config = __DIR__."/../configs/".self::DEFAULT_SCANNER_CONFIG;
         if (isset($options['scanner_config'])) {
             $this->scanner_config = __DIR__."/../configs/".$options['scanner_config'];
@@ -66,6 +68,15 @@ class Main extends BaseCmd {
         $this->initStrategies();
     }
 
+    public function init() {
+        $options = getopt("h", array("help", "engine_config::", "scanner_config::"));
+        if (isset($options['h']) || isset($options['help'])) {
+            $this->usage();
+        }
+
+        $this->initEngine();
+        $this->initScanner();
+    }
 }
 
 $cmd = new Main();

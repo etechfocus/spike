@@ -18,8 +18,10 @@ class BaseCmd {
     }
 
     public function execute() {
+        $this->startTime = microtime(true);
         $this->init();
         $this->process();
+        $this->endTime = microtime(true);
     }
 
 }

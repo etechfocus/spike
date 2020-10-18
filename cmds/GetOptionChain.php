@@ -88,19 +88,33 @@ class Main extends BaseCmd {
         }
     }
 
-    public function init() {
-        $options = getopt("h", array("help", "engine_config::", "symbol::", "contract_type::", "strikes::", "days::"));
-        if (isset($options['h']) || isset($options['help'])) {
-            print("Usage: php GetOptionChain.php ".
+    public function usage() {
+        print("Usage: php GetOptionChain.php ".
                     "[-h] ".
                     "[--engine_config <engine_config default:".self::DEFAULT_ENGINE_CONFIG.">] ".
                     "[--symbol <symbol default:".self::DEFAULT_SYMBOL.">] ".
                     "[--contract_type <contract type possible:ALL|CALL|PUT default:".self::DEFAULT_CONTRACT_TYPE."] ".
                     "[--strikes <strikes default:".self::DEFAULT_STRIKES.">] ".
                     "[--days <days default:".self::DEFAULT_DAYS.">] "
-            );
-            print("\n");
-            exit();
+        );
+        print("\n");
+        exit();
+    }
+
+    public function initEngine() {
+        $this->engine_config = __DIR__."/../configs/".self::DEFAULT_ENGINE_CONFIG;
+        if (isset($options['engine_config'])) {
+            $this->engine_config = __DIR__."/../configs/".$options['engine_config'];
+        }
+        $configs = $this->loadConfig($this->engine_config);
+        $this->engine = new TradeEngine();
+        $this->engine->init($configs);
+    }
+
+    public function init() {
+        $options = getopt("h", array("help", "engine_config::", "symbol::", "contract_type::", "strikes::", "days::"));
+        if (isset($options['h']) || isset($options['help'])) {
+            $this->usage();
         }
         $this->symbol = self::DEFAULT_SYMBOL;
         if (isset($options['symbol'])) {
@@ -121,13 +135,7 @@ class Main extends BaseCmd {
         $this->startDate = time();
         $this->endDate = time()+$this->days*24*60*60;
 
-        $this->engine_config = __DIR__."/../configs/".self::DEFAULT_ENGINE_CONFIG;
-        if (isset($options['engine_config'])) {
-            $this->engine_config = __DIR__."/../configs/".$options['engine_config'];
-        }
-        $configs = $this->loadConfig($this->engine_config);
-        $this->engine = new TradeEngine();
-        $this->engine->init($configs);
+        $this->initEngine();
     }
 
 }
