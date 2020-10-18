@@ -1,0 +1,24 @@
+{
+  "strategies": {
+      "BullPutSp1": {
+          "path": "lib/components/strategy/BullPutSpreadStrategy",
+          "class": "BullPutSpreadStrategy",
+          "days":30,
+          "maxDelta": 0.15,
+          "minDelta": 0.136,
+          "maxROI": 0.20,
+          "minROI": 0.05,
+          "symbols": ["TSLA", "AAPL"]
+      },
+      "BearCallSp1": {
+          "path": "lib/components/strategy/BearCallSpreadStrategy",
+          "class": "BearCallSpreadStrategy",
+          "days": 30,
+          "maxDelta": 0.13,
+          "minDelta": 0.10,
+          "maxROI": 0.20,
+          "minROI": 0.05,
+          "symbols": ["TSLA", "AAPL"]
+      }
+  }
+}

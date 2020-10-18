@@ -1,0 +1,14 @@
+{
+  "debug": false,
+  "components": {
+      "quoter": {
+        "path":"lib/components/quote/TDAmeriTradeQuoteComponent",
+        "class":"TDAmeriTradeQuoteComponent",
+        "api_key":"..."
+      },
+      "strategy": {
+        "path":"lib/components/strategy/OptionStrategyComponent",
+        "class":"OptionStrategyComponent"
+      }
+  }
+}
