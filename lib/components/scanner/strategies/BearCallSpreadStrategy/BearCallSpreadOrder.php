@@ -1,23 +1,19 @@
 <?php
 
-require_once(__DIR__.'/../../components/strategy/OptionOrder.php');
+require_once(__DIR__.'/../../../../components/scanner/OptionOrder.php');
 
-class BullPutSpreadOrder extends OptionOrder {
-
-    public function getName() {
-        return "BullPutSpreadOrder";
-    }
+class BearCallSpreadOrder extends OptionOrder {
 
     public function isValid() {
         return $this->numOfLegs() == 2;
     }
 
     public function getShortLeg() {
-        return $this->firstShortPutLeg();
+        return $this->firstShortCallLeg();
     }
 
     public function getLongLeg() {
-        return $this->firstLongPutLeg();
+        return $this->firstLongCallLeg();
     }
 
     public function getDelta() {
@@ -27,7 +23,7 @@ class BullPutSpreadOrder extends OptionOrder {
     public function getRisk() {
         $shortStrike = $this->getShortLeg()->getStrike();
         $longStrike = $this->getLongLeg()->getStrike();
-        return $shortStrike - $longStrike;
+        return $longStrike - $shortStrike;
     }
 
     public function getROI() {

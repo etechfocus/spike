@@ -1,14 +1,14 @@
 <?php
 
-require_once(__DIR__.'/../../engine/common/Constants.php');
-require_once(__DIR__.'/../../components/strategy/OptionStrategy.php');
-require_once('BullPutSpreadOrder.php');
-require_once('BullPutSpreadParams.php');
+require_once(__DIR__.'/../../../../engine/common/Constants.php');
+require_once(__DIR__.'/../../../../components/scanner/OptionStrategy.php');
+require_once('BearCallSpreadOrder.php');
+require_once('BearCallSpreadParams.php');
 
-class BullPutSpreadStrategy extends OptionStrategy {
+class BearCallSpreadStrategy extends OptionStrategy {
 
     public function getName() {
-        return "BullPutSpreadStrategy";
+        return "BearCallSpreadStrategy";
     }
 
     public function init($engine, $id, $configs) {
@@ -16,7 +16,7 @@ class BullPutSpreadStrategy extends OptionStrategy {
     }
 
     public function createParams($configs) {
-        return new BullPutSpreadParams($configs);
+        return new BearCallSpreadParams($configs);
     }
 
     public function findOrders() {
@@ -26,29 +26,28 @@ class BullPutSpreadStrategy extends OptionStrategy {
         $ret = array();
         foreach ($this->getParams()->getSymbols() as $symbol) {
             $chain = $quoter->getOptionChain($symbol, $startDate, $endDate,
-                   Constants::PUT, 1000 /* strikes */);
-            $optionStrategyComponent = $this->engine->getComponent('strategy');
+                   Constants::CALL, 1000 /* strikes */);
+            $scannerComponent = $this->engine->getComponent('scanner');
             foreach ($chain as $expDate => $strikes) {
                 foreach ($strikes as $shortStrike => $shortQuotes) {
-                    if (isset($shortQuotes[Constants::PUT]) && 
-                        $shortQuotes[Constants::PUT]->getDelta() > (-1 * $this->getParams()->getMaxDelta()) &&
-                        $shortQuotes[Constants::PUT]->getDelta() < (-1 * $this->getParams()->getMinDelta()) &&
-                        $shortQuotes[Constants::PUT]->getAsk() > 0) {
+                    if (isset($shortQuotes[Constants::CALL]) && 
+                          $shortQuotes[Constants::CALL]->getDelta() >= $this->getParams()->getMinDelta() &&
+                          $shortQuotes[Constants::CALL]->getDelta() <= $this->getParams()->getMaxDelta() &&
+                          $shortQuotes[Constants::CALL]->getAsk() > 0) {
 
-                        $shortLeg = $optionStrategyComponent->createShortLeg(1, $shortQuotes[Constants::PUT]);
+                        $shortLeg = $scannerComponent->createShortLeg(1, $shortQuotes[Constants::CALL]);
 
                         foreach ($strikes as $longStrike => $longQuotes) {
-                            $longLeg = $optionStrategyComponent->createLongLeg(1, $longQuotes[Constants::PUT]);
-
-                            $order = new BullPutSpreadOrder($shortLeg->getSymbol());
+                            $longLeg = $scannerComponent->createLongLeg(1, $longQuotes[Constants::CALL]);
+                            $order = new BearCallSpreadOrder($shortLeg->getSymbol());
                             $order->addLeg($shortLeg);
                             $order->addLeg($longLeg);
 
-                            if ($shortStrike < $longStrike) {
+                            if ($shortStrike > $longStrike) {
                                 continue;
                             }
-                            $credit = $order->getPrice();
-                            if ($credit >= 0) {
+                            $price = $order->getPrice();
+                            if ($price >= 0) {
                                 continue;
                             }
                             $risk = $order->getRisk();

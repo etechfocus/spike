@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__.'/../../components/strategy/StrategyParams.php');
+require_once(__DIR__.'/../../../../components/scanner/StrategyParams.php');
 
 class ComboParams extends StrategyParams {
 

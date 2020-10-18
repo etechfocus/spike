@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__.'/../../engine/common/Constants.php');
-require_once(__DIR__.'/../../components/strategy/OptionStrategy.php');
+require_once(__DIR__.'/../../../../engine/common/Constants.php');
+require_once(__DIR__.'/../../../../components/scanner/OptionStrategy.php');
 require_once('ComboOrder.php');
 require_once('ComboParams.php');
 

@@ -50,7 +50,7 @@ class Main extends BaseCmd {
             }
 
             // instantiate strategy
-            $path = __DIR__.'/../lib/strategies/'.$strategyConfig['class'].'/'.$strategyConfig['class'].'.php';
+            $path = __DIR__.'/../lib/components/scanner/strategies/'.$strategyConfig['class'].'/'.$strategyConfig['class'].'.php';
             if (isset($strategyConfig['path'])) {
                 $path = __DIR__.'/../'.$strategyConfig['path'].'.php';
             }

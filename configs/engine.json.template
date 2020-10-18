@@ -6,8 +6,8 @@
         "class":"TDAmeriTradeQuoteComponent",
         "api_key":"..."
       },
-      "strategy": {
-        "path":"lib/components/strategy/OptionStrategyComponent",
+      "scanner": {
+        "path":"lib/components/scanner/OptionStrategyComponent",
         "class":"OptionStrategyComponent"
       }
   }

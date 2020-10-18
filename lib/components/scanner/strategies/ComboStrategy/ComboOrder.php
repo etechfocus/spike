@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__.'/../../components/strategy/OptionOrder.php');
+require_once(__DIR__.'/../../../../components/scanner/OptionOrder.php');
 
 class ComboOrder extends OptionOrder {
 
