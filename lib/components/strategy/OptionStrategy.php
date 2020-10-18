@@ -4,10 +4,6 @@ require_once(__DIR__.'/../../engine/common/Constants.php');
 
 class OptionStrategy {
 
-    const LEG_TYPE_BUY = 'BUY';
-    const LEG_TYPE_SELL = 'SELL';
-
-    protected $engine;
     protected $legs = array();
 
     public function init($engine, $id, $configs) {
@@ -71,7 +67,7 @@ class OptionStrategy {
     }
 
     public function firstLongCallLeg() {
-        $legs = $this->getLegsByTypes(Constants::BUY, Constants::CALL);
+        $legs = $this->getLegsByTypes(Constants::LONG, Constants::CALL);
         if (count($legs) <= 0) {
             return false;
         }
@@ -79,7 +75,7 @@ class OptionStrategy {
     }
 
     public function firstShortCallLeg() {
-        $legs = $this->getLegsByTypes(Constants::SELL, Constants::CALL);
+        $legs = $this->getLegsByTypes(Constants::SHORT, Constants::CALL);
         if (count($legs) <= 0) {
             return false;
         }
@@ -87,7 +83,7 @@ class OptionStrategy {
     }
 
     public function firstLongPutLeg() {
-        $legs = $this->getLegsByTypes(Constants::BUY, Constants::PUT);
+        $legs = $this->getLegsByTypes(Constants::LONG, Constants::PUT);
         if (count($legs) <= 0) {
             return false;
         }
@@ -95,7 +91,7 @@ class OptionStrategy {
     }
 
     public function firstShortPutLeg() {
-        $legs = $this->getLegsByTypes(Constants::SELL, Constants::PUT);
+        $legs = $this->getLegsByTypes(Constants::SHORT, Constants::PUT);
         if (count($legs) <= 0) {
             return false;
         }

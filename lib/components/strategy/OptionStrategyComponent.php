@@ -8,7 +8,7 @@ class OptionStrategyComponent extends EngineComponent {
     public function createSellLeg($qty, $quote) {
         $attrs = array();
         $attrs['qty'] = $qty;
-        $attrs['type'] = Constants::SELL;
+        $attrs['type'] = Constants::SHORT;
         $attrs['quote'] = $quote;
         $leg = new OptionLeg($attrs);
         return $leg;
@@ -17,7 +17,7 @@ class OptionStrategyComponent extends EngineComponent {
     public function createBuyLeg($qty, $quote) {
         $attrs = array();
         $attrs['qty'] = $qty;
-        $attrs['type'] = Constants::BUY;
+        $attrs['type'] = Constants::LONG;
         $attrs['quote'] = $quote;
         $leg = new OptionLeg($attrs);
         return $leg;

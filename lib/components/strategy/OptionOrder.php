@@ -69,7 +69,7 @@ class OptionOrder {
     }
 
     public function firstLongCallLeg() {
-        $legs = $this->getLegsByTypes(Constants::BUY, Constants::CALL);
+        $legs = $this->getLegsByTypes(Constants::LONG, Constants::CALL);
         if (count($legs) <= 0) {
             return false;
         }
@@ -77,7 +77,7 @@ class OptionOrder {
     }
 
     public function firstShortCallLeg() {
-        $legs = $this->getLegsByTypes(Constants::SELL, Constants::CALL);
+        $legs = $this->getLegsByTypes(Constants::SHORT, Constants::CALL);
         if (count($legs) <= 0) {
             return false;
         }
@@ -85,7 +85,7 @@ class OptionOrder {
     }
 
     public function firstLongPutLeg() {
-        $legs = $this->getLegsByTypes(Constants::BUY, Constants::PUT);
+        $legs = $this->getLegsByTypes(Constants::LONG, Constants::PUT);
         if (count($legs) <= 0) {
             return false;
         }
@@ -93,7 +93,7 @@ class OptionOrder {
     }
 
     public function firstShortPutLeg() {
-        $legs = $this->getLegsByTypes(Constants::SELL, Constants::PUT);
+        $legs = $this->getLegsByTypes(Constants::SHORT, Constants::PUT);
         if (count($legs) <= 0) {
             return false;
         }

@@ -17,11 +17,11 @@ class OptionLeg {
     }
 
     public function isLong() {
-        return $this->getType()==Constants::BUY;
+        return $this->getType()==Constants::LONG;
     }
 
     public function isShort() {
-        return $this->getType()==Constants::SELL;
+        return $this->getType()==Constants::SHORT;
     }
 
     public function getType() {
