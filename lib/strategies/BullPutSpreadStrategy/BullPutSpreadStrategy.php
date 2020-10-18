@@ -35,10 +35,10 @@ class BullPutSpreadStrategy extends OptionStrategy {
                         $shortQuotes['PUT']->getDelta() < (-1 * $this->getParams()->getMinDelta()) &&
                         $shortQuotes['PUT']->getAsk() > 0) {
 
-                        $shortLeg = $optionStrategyComponent->createSellLeg(1, $shortQuotes['PUT']);
+                        $shortLeg = $optionStrategyComponent->createShortLeg(1, $shortQuotes['PUT']);
 
                         foreach ($strikes as $longStrike => $longQuotes) {
-                            $longLeg = $optionStrategyComponent->createBuyLeg(1, $longQuotes['PUT']);
+                            $longLeg = $optionStrategyComponent->createLongLeg(1, $longQuotes['PUT']);
 
                             $order = new BullPutSpreadOrder($shortLeg->getSymbol());
                             $order->addLeg($shortLeg);

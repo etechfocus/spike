@@ -5,7 +5,7 @@ require_once(__DIR__.'/../../engine/common/EngineComponent.php');
 
 class OptionStrategyComponent extends EngineComponent {
 
-    public function createSellLeg($qty, $quote) {
+    public function createShortLeg($qty, $quote) {
         $attrs = array();
         $attrs['qty'] = $qty;
         $attrs['type'] = Constants::SHORT;
@@ -14,7 +14,7 @@ class OptionStrategyComponent extends EngineComponent {
         return $leg;
     }
 
-    public function createBuyLeg($qty, $quote) {
+    public function createLongLeg($qty, $quote) {
         $attrs = array();
         $attrs['qty'] = $qty;
         $attrs['type'] = Constants::LONG;

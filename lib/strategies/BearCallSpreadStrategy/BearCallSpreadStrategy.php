@@ -35,10 +35,10 @@ class BearCallSpreadStrategy extends OptionStrategy {
                           $shortQuotes['CALL']->getDelta() <= $this->getParams()->getMaxDelta() &&
                           $shortQuotes['CALL']->getAsk() > 0) {
 
-                        $shortLeg = $optionStrategyComponent->createSellLeg(1, $shortQuotes['CALL']);
+                        $shortLeg = $optionStrategyComponent->createShortLeg(1, $shortQuotes['CALL']);
 
                         foreach ($strikes as $longStrike => $longQuotes) {
-                            $longLeg = $optionStrategyComponent->createBuyLeg(1, $longQuotes['CALL']);
+                            $longLeg = $optionStrategyComponent->createLongLeg(1, $longQuotes['CALL']);
                             $order = new BearCallSpreadOrder($shortLeg->getSymbol());
                             $order->addLeg($shortLeg);
                             $order->addLeg($longLeg);
