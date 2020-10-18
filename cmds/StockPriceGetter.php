@@ -12,10 +12,10 @@ class Main extends BaseCmd {
     public function process() {
         $quoter = $this->engine->getComponent('quoter');
         $quotes = $quoter->getStockPriceHistory($this->symbol, $this->startDate, $this->endDate);
-        printf("%-12s %-6s\n", "DATE", "CLOSE");
-        printf("%-12s %-6s\n", "----", "-----");
+        printf("%-12s %-6s %-6s\n", "DATE", "SYMBOL", "CLOSE");
+        printf("%-12s %-6s %-6s\n", "----", "------", "-----");
         foreach ($quotes as $quote) {
-            printf("%-12s %0.3f\n", $quote->getDate(), $quote->getClose());
+            printf("%-12s %-6s %0.3f\n", $quote->getDate(), $quote->getSymbol(), $quote->getClose());
 	}
     }
 
