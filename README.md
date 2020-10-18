@@ -8,7 +8,3 @@ This package provides a framework to scan for potential option trades with exten
 2) Fill in the api_key in the quoter component
    (Get API key from https://developer.tdameritrade.com/)
 3) Test by running commands under cmds/. For example, php cmds/OptionScanner.php
-
-# TODO
-
-1) Add more strategies to configs/scanner.json
