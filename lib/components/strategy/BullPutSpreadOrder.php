@@ -21,13 +21,13 @@ class BullPutSpreadOrder extends OptionOrder {
     }
 
     public function getDelta() {
-        return $this->getShortLeg()->getQuote()->getDelta();
+        return $this->getShortLeg()->getDelta();
     }
 
     public function getRisk() {
-        $shortQuote = $this->getShortLeg()->getQuote();
-        $longQuote = $this->getLongLeg()->getQuote();
-        return $shortQuote->getStrike() - $longQuote->getStrike();
+        $shortStrike = $this->getShortLeg()->getStrike();
+        $longStrike = $this->getLongLeg()->getStrike();
+        return $shortStrike - $longStrike;
     }
 
     public function getROI() {

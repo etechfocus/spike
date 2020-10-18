@@ -29,7 +29,7 @@ class BearCallSpreadStrategy extends OptionStrategy {
 
                         foreach ($strikes as $longStrike => $longQuotes) {
                             $longLeg = $optionStrategyComponent->createBuyLeg(1, $longQuotes['CALL']);
-                            $order = new BearCallSpreadOrder($shortLeg->getQuote()->getSymbol());
+                            $order = new BearCallSpreadOrder($shortLeg->getSymbol());
                             $order->addLeg($shortLeg);
                             $order->addLeg($longLeg);
 

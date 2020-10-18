@@ -37,7 +37,7 @@ class OptionStrategy {
     public function getLegsByTypes($legType, $optionType) {
         $ret = array();
         foreach ($this->legs as $leg) {
-            if ($leg->getType() == $legType && $leg->getQuote()->getType() == $optionType) {
+            if ($leg->getType() == $legType && $leg->getQuoteType() == $optionType) {
                 $ret[] = $leg;
             }
         }
@@ -57,7 +57,7 @@ class OptionStrategy {
     public function getLegsByOptionType($type) {
         $ret = array();
         foreach ($this->legs as $leg) {
-            if ($leg->getQuote()->getType() == $type) {
+            if ($leg->getQuoteType() == $type) {
                 $ret[] = $leg;
             }
         }
@@ -100,9 +100,9 @@ class OptionStrategy {
         $ret = 0;
         foreach ($this->legs as $leg) {
             if ($leg->getType() == 'SELL') {
-                $ret -= ($leg->getQty() * $leg->getQuote()->getBid());
+                $ret -= ($leg->getQty() * $leg->getBid());
             } else {
-                $ret += ($leg->getQty() * $leg->getQuote()->getAsk());
+                $ret += ($leg->getQty() * $leg->getAsk());
             }
         }
         return round($ret, 3);

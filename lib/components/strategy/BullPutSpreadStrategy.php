@@ -30,7 +30,7 @@ class BullPutSpreadStrategy extends OptionStrategy {
                         foreach ($strikes as $longStrike => $longQuotes) {
                             $longLeg = $optionStrategyComponent->createBuyLeg(1, $longQuotes['PUT']);
 
-                            $order = new BullPutSpreadOrder($shortLeg->getQuote()->getSymbol());
+                            $order = new BullPutSpreadOrder($shortLeg->getSymbol());
                             $order->addLeg($shortLeg);
                             $order->addLeg($longLeg);
 

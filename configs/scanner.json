@@ -7,7 +7,7 @@
           "maxDelta": 0.15,
           "minDelta": 0.136,
           "maxROI": 0.20,
-          "minROI": 0.05,
+          "minROI": 0.10,
           "symbols": ["TSLA", "AAPL"]
       },
       "BearCallSp1": {

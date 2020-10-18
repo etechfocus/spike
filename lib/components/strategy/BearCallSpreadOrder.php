@@ -17,13 +17,13 @@ class BearCallSpreadOrder extends OptionOrder {
     }
 
     public function getDelta() {
-        return $this->getShortLeg()->getQuote()->getDelta();
+        return $this->getShortLeg()->getDelta();
     }
 
     public function getRisk() {
-        $shortQuote = $this->getShortLeg()->getQuote();
-        $longQuote = $this->getLongLeg()->getQuote();
-        return $longQuote->getStrike() - $shortQuote->getStrike();
+        $shortStrike = $this->getShortLeg()->getStrike();
+        $longStrike = $this->getLongLeg()->getStrike();
+        return $longStrike - $shortStrike;
     }
 
     public function getROI() {
