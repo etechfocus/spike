@@ -8,10 +8,10 @@ class TradeEngine {
 
     public function init($configs) {
         $this->configs = $configs;
-        $this->initManagers();
+        $this->initComponents();
     }
 
-    private function initManagers() {
+    private function initComponents() {
         foreach ($this->configs['components'] as $componentId => $componentConfig) {
             require_once(__DIR__.'/../../'.$componentConfig['path'].'.php');
             $this->components[$componentId] = new $componentConfig['class']();
