@@ -8,7 +8,17 @@
           "minDelta": 0.136,
           "maxROI": 0.20,
           "minROI": 0.10,
-          "symbols": ["TSLA", "AAPL"]
+          "symbols": ["TSLA"]
+      },
+      "BullPutSp2": {
+          "class": "BullPutSpreadStrategy",
+          "description": "Bull Put Spread",
+          "days": 30,
+          "maxDelta": 0.15,
+          "minDelta": 0.136,
+          "maxROI": 0.20,
+          "minROI": 0.10,
+          "symbols": ["AAPL"]
       },
       "BearCallSp1": {
           "class": "BearCallSpreadStrategy",
@@ -18,7 +28,17 @@
           "minDelta": 0.10,
           "maxROI": 0.20,
           "minROI": 0.05,
-          "symbols": ["TSLA", "AAPL"]
+          "symbols": ["ZM"]
+      },
+      "BearCallSp2": {
+          "class": "BearCallSpreadStrategy",
+          "description": "Bear Call Spread",
+          "days": 30,
+          "maxDelta": 0.13,
+          "minDelta": 0.10,
+          "maxROI": 0.20,
+          "minROI": 0.05,
+          "symbols": ["MSFT"]
       }
   }
 }
