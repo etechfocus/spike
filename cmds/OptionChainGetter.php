@@ -89,7 +89,7 @@ class Main extends BaseCmd {
     }
 
     public function usage() {
-        print("Usage: php GetOptionChain.php ".
+        print("Usage: php OptionChainGetter.php ".
                     "[-h] ".
                     "[--engine_config <engine_config default:".self::DEFAULT_ENGINE_CONFIG.">] ".
                     "[--symbol <symbol default:".self::DEFAULT_SYMBOL.">] ".
