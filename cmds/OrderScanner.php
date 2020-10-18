@@ -28,7 +28,7 @@ class Main extends BaseCmd {
     }
 
     public function usage() {
-        print("Usage: php TradeScanner.php ".
+        print("Usage: php OrderScanner.php ".
                     "[-h] ".
                     "[--engine_config <engine config default:".self::DEFAULT_ENGINE_CONFIG.">] ".
                     "[--scanner_config <scanner config default:".self::DEFAULT_SCANNER_CONFIG.">] "
