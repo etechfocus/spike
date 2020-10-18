@@ -16,6 +16,14 @@ class OptionStrategy {
         return $this->id;
     }
 
+    public function getConfigs() {
+        return $this->configs;
+    }
+
+    public function getDescription() {
+        return $this->configs['description'];
+    }
+
     public function getName() {
         return "OptionStrategy";
     }
