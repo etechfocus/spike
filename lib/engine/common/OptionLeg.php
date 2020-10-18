@@ -30,7 +30,7 @@ class OptionLeg {
         return $this->get('quote');
     }
 
-    public function getQuoteType() {
+    public function getOptionType() {
         return $this->getQuote()->getType();
     }
 

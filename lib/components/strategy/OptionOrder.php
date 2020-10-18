@@ -39,7 +39,7 @@ class OptionOrder {
     public function getLegsByTypes($legType, $optionType) {
         $ret = array();
         foreach ($this->legs as $leg) {
-            if ($leg->getType() == $legType && $leg->getQuoteType() == $optionType) {
+            if ($leg->getType() == $legType && $leg->getOptionType() == $optionType) {
                 $ret[] = $leg;
             }
         }
@@ -59,7 +59,7 @@ class OptionOrder {
     public function getLegsByOptionType($type) {
         $ret = array();
         foreach ($this->legs as $leg) {
-            if ($leg->getQuoteType() == $type) {
+            if ($leg->getOptionType() == $type) {
                 $ret[] = $leg;
             }
         }
