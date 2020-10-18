@@ -83,7 +83,7 @@ class Main extends BaseCmd {
     }
 
     public function init() {
-        $options = getopt("", array("symbol::", "contract_type::", "strikes::", "days::"));
+        $options = getopt("", array("engine_config::", "symbol::", "contract_type::", "strikes::", "days::"));
         $this->symbol = "TSLA";
         if (isset($options['symbol'])) {
             $this->symbol = $options['symbol'];
@@ -103,7 +103,11 @@ class Main extends BaseCmd {
         $this->startDate = time();
         $this->endDate = time()+$this->days*24*60*60;
 
-        $configs = $this->loadConfig(__DIR__."/../configs/engine.json");
+        $this->engine_config = __DIR__."/../configs/engine.json";
+        if (isset($options['engine_config'])) {
+            $this->engine_config = $options['engine_config'];
+        }
+        $configs = $this->loadConfig($this->engine_config);
         $this->engine = new TradeEngine();
         $this->engine->init($configs);
     }

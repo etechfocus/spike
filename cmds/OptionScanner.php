@@ -37,11 +37,20 @@ class Main extends BaseCmd {
     }
 
     public function init() {
-        $configs = $this->loadConfig(__DIR__."/../configs/engine.json");
+        $options = getopt("", array("engine_config::", "scanner_config::"));
+        $this->engine_config = __DIR__."/../configs/engine.json";
+        if (isset($options['engine_config'])) {
+            $this->engine_config = $options['engine_config'];
+        }
+        $configs = $this->loadConfig($this->engine_config);
         $this->engine = new TradeEngine();
         $this->engine->init($configs);
 
-        $this->configs = $this->loadConfig(__DIR__."/../configs/scanner.json");
+        $this->scanner_config = __DIR__."/../configs/scanner.json";
+        if (isset($options['scanner_config'])) {
+            $this->scanner_config = $options['scanner_config'];
+        }
+        $this->configs = $this->loadConfig($this->scanner_config);
         $this->initStrategies();
     }
 
