@@ -72,9 +72,9 @@ class Main extends BaseCmd {
     }
 
     public function initScanner() {
-        $this->scanner_config = __DIR__."/../profiles/".self::DEFAULT_SCANNER_CONFIG;
+        $this->scanner_config = __DIR__."/../profiles/default/".self::DEFAULT_SCANNER_CONFIG;
         if (isset($options['scanner_config'])) {
-            $this->scanner_config = __DIR__."/../profiles/".$options['scanner_config'];
+            $this->scanner_config = __DIR__."/../profiles/default/".$options['scanner_config'];
         }
         $this->configs = $this->loadConfig($this->scanner_config);
         $this->initStrategies();
