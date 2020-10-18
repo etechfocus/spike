@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__.'/../../engine/common/Constants.php');
+require_once('StrategyParams.php');
 
 class OptionStrategy {
 
@@ -10,6 +11,15 @@ class OptionStrategy {
         $this->engine = $engine;
         $this->id = $id;
         $this->configs = $configs;
+        $this->params = $this->createParams($configs);
+    }
+
+    public function createParams($configs) {
+        return new StrategyParams($configs);
+    }
+
+    public function getParams() {
+        return $this->params;
     }
 
     public function getId() {

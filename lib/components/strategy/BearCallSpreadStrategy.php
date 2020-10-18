@@ -3,6 +3,7 @@
 require_once(__DIR__.'/../../engine/common/Constants.php');
 require_once('OptionStrategy.php');
 require_once('BearCallSpreadOrder.php');
+require_once('BearCallSpreadParams.php');
 
 class BearCallSpreadStrategy extends OptionStrategy {
 
@@ -10,20 +11,28 @@ class BearCallSpreadStrategy extends OptionStrategy {
         return "BearCallSpreadStrategy";
     }
 
+    public function init($engine, $id, $configs) {
+        parent::init($engine, $id, $configs);
+    }
+
+    public function createParams($configs) {
+        return new BearCallSpreadParams($configs);
+    }
+
     public function findOrders() {
         $quoter = $this->engine->getComponent('quoter');
         $startDate = time();
-        $endDate = time()+$this->configs['days']*24*60*60;
+        $endDate = time()+$this->getParams()->getDays()*24*60*60;
         $ret = array();
-        foreach ($this->configs['symbols'] as $symbol) {
+        foreach ($this->getParams()->getSymbols() as $symbol) {
             $chain = $quoter->getOptionChain($symbol, $startDate, $endDate,
                    Constants::CALL, 1000 /* strikes */);
             $optionStrategyComponent = $this->engine->getComponent('strategy');
             foreach ($chain as $expDate => $strikes) {
                 foreach ($strikes as $shortStrike => $shortQuotes) {
                     if (isset($shortQuotes['CALL']) && 
-                          $shortQuotes['CALL']->getDelta() >= $this->configs['minDelta'] &&
-                          $shortQuotes['CALL']->getDelta() <= $this->configs['maxDelta'] &&
+                          $shortQuotes['CALL']->getDelta() >= $this->getParams()->getMinDelta() &&
+                          $shortQuotes['CALL']->getDelta() <= $this->getParams()->getMaxDelta() &&
                           $shortQuotes['CALL']->getAsk() > 0) {
 
                         $shortLeg = $optionStrategyComponent->createSellLeg(1, $shortQuotes['CALL']);
@@ -45,8 +54,8 @@ class BearCallSpreadStrategy extends OptionStrategy {
                             if ($risk <= 0) {
                                 continue;
                             }
-                            if ($order->getROI() < $this->configs['minROI'] ||
-                                $order->getROI() > $this->configs['maxROI']) {
+                            if ($order->getROI() < $this->getParams()->getMinROI() ||
+                                $order->getROI() > $this->getParams()->getMaxROI()) {
                                 continue;
                             }
                             $ret[] = $order;

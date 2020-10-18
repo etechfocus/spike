@@ -3,6 +3,7 @@
 require_once(__DIR__.'/../../engine/common/Constants.php');
 require_once('OptionStrategy.php');
 require_once('BullPutSpreadOrder.php');
+require_once('BullPutSpreadParams.php');
 
 class BullPutSpreadStrategy extends OptionStrategy {
 
@@ -10,20 +11,28 @@ class BullPutSpreadStrategy extends OptionStrategy {
         return "BullPutSpreadStrategy";
     }
 
+    public function init($engine, $id, $configs) {
+        parent::init($engine, $id, $configs);
+    }
+
+    public function createParams($configs) {
+        return new BullPutSpreadParams($configs);
+    }
+
     public function findOrders() {
         $quoter = $this->engine->getComponent('quoter');
         $startDate = time();
-        $endDate = time()+$this->configs['days']*24*60*60;
+        $endDate = time()+$this->getParams()->getDays()*24*60*60;
         $ret = array();
-        foreach ($this->configs['symbols'] as $symbol) {
+        foreach ($this->getParams()->getSymbols() as $symbol) {
             $chain = $quoter->getOptionChain($symbol, $startDate, $endDate,
                    Constants::PUT, 1000 /* strikes */);
             $optionStrategyComponent = $this->engine->getComponent('strategy');
             foreach ($chain as $expDate => $strikes) {
                 foreach ($strikes as $shortStrike => $shortQuotes) {
                     if (isset($shortQuotes['PUT']) && 
-                        $shortQuotes['PUT']->getDelta() > (-1 * $this->configs['maxDelta']) &&
-                        $shortQuotes['PUT']->getDelta() < (-1 * $this->configs['minDelta']) &&
+                        $shortQuotes['PUT']->getDelta() > (-1 * $this->getParams()->getMaxDelta()) &&
+                        $shortQuotes['PUT']->getDelta() < (-1 * $this->getParams()->getMinDelta()) &&
                         $shortQuotes['PUT']->getAsk() > 0) {
 
                         $shortLeg = $optionStrategyComponent->createSellLeg(1, $shortQuotes['PUT']);
@@ -46,8 +55,8 @@ class BullPutSpreadStrategy extends OptionStrategy {
                             if ($risk <= 0) {
                                 continue;
                             }
-                            if ($order->getROI() < $this->configs['minROI'] ||
-                                $order->getROI() > $this->configs['maxROI']) {
+                            if ($order->getROI() < $this->getParams()->getMinROI() ||
+                                $order->getROI() > $this->getParams()->getMaxROI()) {
                                 continue;
                             }
                             $ret[] = $order;
