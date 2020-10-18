@@ -40,7 +40,7 @@
           "minROI": 0.05,
           "maxROI": 0.20
       },
-      "ic1": {
+      "IronCondor1": {
           "enabled": false,
           "class": "ComboStrategy",
           "description": "Iron Condor",
