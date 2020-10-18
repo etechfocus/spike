@@ -6,6 +6,9 @@ require_once(__DIR__.'/../lib/cmd/BaseCmd.php');
 
 class Main extends BaseCmd {
 
+    const DEFAULT_ENGINE_CONFIG = 'engine.json';
+    const DEFAULT_SCANNER_CONFIG = 'scanner.json';
+
     public function printOrder($strategy, $order) {
         printf("%-12s %-52s %-6s %-6s %-6s %-6s\n", $strategy->getId(),
             $order->getDescription(), $order->getPrice(), 
@@ -37,18 +40,27 @@ class Main extends BaseCmd {
     }
 
     public function init() {
-        $options = getopt("", array("engine_config::", "scanner_config::"));
-        $this->engine_config = __DIR__."/../configs/engine.json";
+        $options = getopt("h", array("help", "engine_config::", "scanner_config::"));
+        if (isset($options['h']) || isset($options['help'])) {
+            print("Usage: php OptionScanner.php ".
+                    "[-h] ".
+                    "[--engine_config <engine config default:".self::DEFAULT_ENGINE_CONFIG.">] ".
+                    "[--scanner_config <scanner config default:".self::DEFAULT_SCANNER_CONFIG.">] "
+            );
+            print("\n");
+            exit();
+        }
+        $this->engine_config = __DIR__."/../configs/".self::DEFAULT_ENGINE_CONFIG;
         if (isset($options['engine_config'])) {
-            $this->engine_config = $options['engine_config'];
+            $this->engine_config = __DIR__."/../configs/".$options['engine_config'];
         }
         $configs = $this->loadConfig($this->engine_config);
         $this->engine = new TradeEngine();
         $this->engine->init($configs);
 
-        $this->scanner_config = __DIR__."/../configs/scanner.json";
+        $this->scanner_config = __DIR__."/../configs/".self::DEFAULT_SCANNER_CONFIG;
         if (isset($options['scanner_config'])) {
-            $this->scanner_config = $options['scanner_config'];
+            $this->scanner_config = __DIR__."/../configs/".$options['scanner_config'];
         }
         $this->configs = $this->loadConfig($this->scanner_config);
         $this->initStrategies();

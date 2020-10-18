@@ -5,6 +5,12 @@ require_once(__DIR__.'/../lib/cmd/BaseCmd.php');
 
 class Main extends BaseCmd {
 
+    const DEFAULT_ENGINE_CONFIG = 'engine.json';
+    const DEFAULT_SYMBOL = 'TSLA';
+    const DEFAULT_CONTRACT_TYPE = 'ALL';
+    const DEFAULT_STRIKES = 10;
+    const DEFAULT_DAYS = 30;
+
     public function isColorEnabled() {
         return true;
     }
@@ -83,29 +89,41 @@ class Main extends BaseCmd {
     }
 
     public function init() {
-        $options = getopt("", array("engine_config::", "symbol::", "contract_type::", "strikes::", "days::"));
-        $this->symbol = "TSLA";
+        $options = getopt("h", array("help", "engine_config::", "symbol::", "contract_type::", "strikes::", "days::"));
+        if (isset($options['h']) || isset($options['help'])) {
+            print("Usage: php GetOptionChain.php ".
+                    "[-h] ".
+                    "[--engine_config <engine_config default:".self::DEFAULT_ENGINE_CONFIG.">] ".
+                    "[--symbol <symbol default:".self::DEFAULT_SYMBOL.">] ".
+                    "[--contract_type <contract type possible:ALL|CALL|PUT default:".self::DEFAULT_CONTRACT_TYPE."] ".
+                    "[--strikes <strikes default:".self::DEFAULT_STRIKES.">] ".
+                    "[--days <days default:".self::DEFAULT_DAYS.">] "
+            );
+            print("\n");
+            exit();
+        }
+        $this->symbol = self::DEFAULT_SYMBOL;
         if (isset($options['symbol'])) {
             $this->symbol = $options['symbol'];
         }
-        $this->contractType = 'ALL';
+        $this->contractType = self::DEFAULT_CONTRACT_TYPE;
         if (isset($options['contract_type'])) {
             $this->contractType = $options['contract_type'];
         }
-        $this->strikes = 10;
+        $this->strikes = self::DEFAULT_STRIKES;
         if (isset($options['strikes'])) {
             $this->strikes = $options['strikes'];
         }
-        $this->days = 30;
+        $this->days = self::DEFAULT_DAYS;
         if (isset($options['days'])) {
             $this->days = $options['days'];
         }
         $this->startDate = time();
         $this->endDate = time()+$this->days*24*60*60;
 
-        $this->engine_config = __DIR__."/../configs/engine.json";
+        $this->engine_config = __DIR__."/../configs/".self::DEFAULT_ENGINE_CONFIG;
         if (isset($options['engine_config'])) {
-            $this->engine_config = $options['engine_config'];
+            $this->engine_config = __DIR__."/../configs/".$options['engine_config'];
         }
         $configs = $this->loadConfig($this->engine_config);
         $this->engine = new TradeEngine();
