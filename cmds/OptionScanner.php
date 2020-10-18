@@ -15,7 +15,7 @@ class Main extends BaseCmd {
     public function process() {
         foreach ($this->strategies as $strategyId => $strategy) {
             $orders = $strategy->findOrders();
-            printf("%-12s %-52s %-6s %-6s %-6s %-6s\n", "STRATEGY", "ORDER", "PRICE", "DELTA", "RISK", "ROI");
+            printf("%-12s %-52s %-6s %-6s %-6s %-6s\n", "STRATEGY", "TRADE", "PRICE", "DELTA", "RISK", "ROI");
             printf("%-12s %-52s %-6s %-6s %-6s %-6s\n", "--------", "-----", "-----", "-----", "----", "---");
             foreach ($orders as $order) {
                 $this->printOrder($strategy, $order);
