@@ -5,6 +5,9 @@ class BaseCmd {
     public function init() {
     }
 
+    public function process() {
+    }
+
     public function loadConfig($path) {
         if (!file_exists($path)) {
             throw new Exception('config not present - '.$path);
