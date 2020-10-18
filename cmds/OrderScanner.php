@@ -31,7 +31,7 @@ class Main extends BaseCmd {
         print("Usage: php OrderScanner.php ".
                     "[-h] ".
                     "[--engine_config <engine config default:".self::DEFAULT_ENGINE_CONFIG.">] ".
-                    "[--scanner_config <scanner config default:".self::DEFAULT_SCANNER_CONFIG.">] "
+                    "[--scanner_config <scanner profile default:".self::DEFAULT_SCANNER_CONFIG.">] "
         );
         print("\n");
         exit();
@@ -72,9 +72,9 @@ class Main extends BaseCmd {
     }
 
     public function initScanner() {
-        $this->scanner_config = __DIR__."/../configs/".self::DEFAULT_SCANNER_CONFIG;
+        $this->scanner_config = __DIR__."/../profiles/".self::DEFAULT_SCANNER_CONFIG;
         if (isset($options['scanner_config'])) {
-            $this->scanner_config = __DIR__."/../configs/".$options['scanner_config'];
+            $this->scanner_config = __DIR__."/../profiles/".$options['scanner_config'];
         }
         $this->configs = $this->loadConfig($this->scanner_config);
         $this->initStrategies();
