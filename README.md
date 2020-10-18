@@ -1,6 +1,6 @@
 # INTRO
 
-This package provides a framework to scan for potential option trades with strategies.
+This package provides a framework to scan for potential option trades with extensible strategies.
 
 # TEST
 
