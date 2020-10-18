@@ -99,7 +99,7 @@ class TDAmeriTradeQuoteComponent extends EngineComponent {
                 $attrs['theta'] = $price[0]['theta'];
                 $attrs['vega'] = $price[0]['vega'];
                 $quote = new OptionQuote($attrs);
-                $quotes[$expDate][$strike]['CALL'] = $quote;
+                $quotes[$expDate][$strike][Constants::CALL] = $quote;
             }
         }
         foreach ($resp['putExpDateMap'] as $expDate => $strikes) {
@@ -120,7 +120,7 @@ class TDAmeriTradeQuoteComponent extends EngineComponent {
                 $attrs['theta'] = $price[0]['theta'];
                 $attrs['vega'] = $price[0]['vega'];
                 $quote = new OptionQuote($attrs);
-                $quotes[$expDate][$strike]['PUT'] = $quote;
+                $quotes[$expDate][$strike][Constants::PUT] = $quote;
             }
         }
         return $quotes;

@@ -30,15 +30,15 @@ class BearCallSpreadStrategy extends OptionStrategy {
             $optionStrategyComponent = $this->engine->getComponent('strategy');
             foreach ($chain as $expDate => $strikes) {
                 foreach ($strikes as $shortStrike => $shortQuotes) {
-                    if (isset($shortQuotes['CALL']) && 
-                          $shortQuotes['CALL']->getDelta() >= $this->getParams()->getMinDelta() &&
-                          $shortQuotes['CALL']->getDelta() <= $this->getParams()->getMaxDelta() &&
-                          $shortQuotes['CALL']->getAsk() > 0) {
+                    if (isset($shortQuotes[Constants::CALL]) && 
+                          $shortQuotes[Constants::CALL]->getDelta() >= $this->getParams()->getMinDelta() &&
+                          $shortQuotes[Constants::CALL]->getDelta() <= $this->getParams()->getMaxDelta() &&
+                          $shortQuotes[Constants::CALL]->getAsk() > 0) {
 
-                        $shortLeg = $optionStrategyComponent->createShortLeg(1, $shortQuotes['CALL']);
+                        $shortLeg = $optionStrategyComponent->createShortLeg(1, $shortQuotes[Constants::CALL]);
 
                         foreach ($strikes as $longStrike => $longQuotes) {
-                            $longLeg = $optionStrategyComponent->createLongLeg(1, $longQuotes['CALL']);
+                            $longLeg = $optionStrategyComponent->createLongLeg(1, $longQuotes[Constants::CALL]);
                             $order = new BearCallSpreadOrder($shortLeg->getSymbol());
                             $order->addLeg($shortLeg);
                             $order->addLeg($longLeg);

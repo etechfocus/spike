@@ -30,15 +30,15 @@ class BullPutSpreadStrategy extends OptionStrategy {
             $optionStrategyComponent = $this->engine->getComponent('strategy');
             foreach ($chain as $expDate => $strikes) {
                 foreach ($strikes as $shortStrike => $shortQuotes) {
-                    if (isset($shortQuotes['PUT']) && 
-                        $shortQuotes['PUT']->getDelta() > (-1 * $this->getParams()->getMaxDelta()) &&
-                        $shortQuotes['PUT']->getDelta() < (-1 * $this->getParams()->getMinDelta()) &&
-                        $shortQuotes['PUT']->getAsk() > 0) {
+                    if (isset($shortQuotes[Constants::PUT]) && 
+                        $shortQuotes[Constants::PUT]->getDelta() > (-1 * $this->getParams()->getMaxDelta()) &&
+                        $shortQuotes[Constants::PUT]->getDelta() < (-1 * $this->getParams()->getMinDelta()) &&
+                        $shortQuotes[Constants::PUT]->getAsk() > 0) {
 
-                        $shortLeg = $optionStrategyComponent->createShortLeg(1, $shortQuotes['PUT']);
+                        $shortLeg = $optionStrategyComponent->createShortLeg(1, $shortQuotes[Constants::PUT]);
 
                         foreach ($strikes as $longStrike => $longQuotes) {
-                            $longLeg = $optionStrategyComponent->createLongLeg(1, $longQuotes['PUT']);
+                            $longLeg = $optionStrategyComponent->createLongLeg(1, $longQuotes[Constants::PUT]);
 
                             $order = new BullPutSpreadOrder($shortLeg->getSymbol());
                             $order->addLeg($shortLeg);
