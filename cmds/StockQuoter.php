@@ -20,7 +20,7 @@ class Main extends BaseCmd {
     }
 
     public function usage() {
-        print("Usage: php StockPriceGetter.php ".
+        print("Usage: php StockQuoter.php ".
                     "[-h] ".
                     "[--engine_config <engine_config default:".self::DEFAULT_ENGINE_CONFIG.">] ".
                     "[--symbol <symbol default:".self::DEFAULT_SYMBOL.">] ".
