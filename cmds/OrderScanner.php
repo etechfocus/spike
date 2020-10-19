@@ -61,7 +61,7 @@ class Main extends BaseCmd {
         }
     }
 
-    public function initEngine() {
+    public function initEngine($options) {
         $this->engine_config = __DIR__."/../configs/".self::DEFAULT_ENGINE_CONFIG;
         if (isset($options['engine_config'])) {
             $this->engine_config = __DIR__."/../configs/".$options['engine_config'];
@@ -71,7 +71,7 @@ class Main extends BaseCmd {
         $this->engine->init($configs);
     }
 
-    public function initScanner() {
+    public function initScanner($options) {
         $this->scanner_config = __DIR__."/../profiles/default/".self::DEFAULT_SCANNER_CONFIG;
         if (isset($options['scanner_config'])) {
             $this->scanner_config = __DIR__."/../profiles/default/".$options['scanner_config'];
@@ -86,8 +86,8 @@ class Main extends BaseCmd {
             $this->usage();
         }
 
-        $this->initEngine();
-        $this->initScanner();
+        $this->initEngine($options);
+        $this->initScanner($options);
     }
 }
 

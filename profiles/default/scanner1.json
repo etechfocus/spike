@@ -1,0 +1,14 @@
+{
+  "strategies": {
+      "BullPutSp1": {
+          "class": "BullPutSpreadStrategy",
+          "description": "Bull Put Spread",
+          "symbols": ["TSLA"],
+          "days": 14,
+          "minDelta": 0.05,
+          "maxDelta": 0.20,
+          "minROI": 0.05,
+          "maxROI": 0.50
+      }
+  }
+}
