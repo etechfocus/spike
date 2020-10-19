@@ -8,10 +8,12 @@ class Main extends BaseCmd {
     const DEFAULT_ENGINE_CONFIG = 'engine.json';
     const DEFAULT_SYMBOL = 'TSLA';
     const DEFAULT_DAYS = 30;
+    const DEFAULT_PERIOD_TYPE = 'month';
+    const DEFAULT_FREQUENCY_TYPE = 'daily';
 
     public function process() {
         $quoter = $this->engine->getComponent('quoter');
-        $quotes = $quoter->getStockPriceHistory($this->symbol, $this->startDate, $this->endDate);
+        $quotes = $quoter->getStockPriceHistory($this->symbol, $this->startDate, $this->endDate, $this->period_type, $this->frequency_type);
         printf("%-12s %-6s %-6s\n", "DATE", "SYMBOL", "CLOSE");
         printf("%-12s %-6s %-6s\n", "----", "------", "-----");
         foreach ($quotes as $quote) {
@@ -41,7 +43,7 @@ class Main extends BaseCmd {
     }
 
     public function init() {
-        $options = getopt("h", array("help", "engine_config::", "symbol::", "days::"));
+        $options = getopt("h", array("help", "engine_config::", "symbol::", "days::", "period_type::", "frequency_type"));
         if (isset($options['h']) || isset($options['help'])) {
             $this->usage();
         }
@@ -55,6 +57,15 @@ class Main extends BaseCmd {
         }
         $this->startDate = time()-$this->days*24*60*60;
         $this->endDate = time();
+
+        $this->period_type = self::DEFAULT_PERIOD_TYPE;
+        if (isset($options['period_type'])) {
+            $this->period_type = $options['period_type'];
+        }
+        $this->frequency_type = self::DEFAULT_FREQUENCY_TYPE;
+        if (isset($options['frequency_type'])) {
+            $this->frequency_type = $options['frequency_type'];
+        }
 
         $this->initEngine();
     }

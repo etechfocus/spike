@@ -47,7 +47,7 @@ class TDAmeriTradeQuoteComponent extends EngineComponent {
         return $ret;
     }
 
-    public function getStockPriceHistory($symbol, $startDate, $endDate) {
+    public function getStockPriceHistory($symbol, $startDate, $endDate, $periodType, $frequencyType) {
         $symbol = strtoupper($symbol);
         $params = array();
         $params['periodType']='month';
